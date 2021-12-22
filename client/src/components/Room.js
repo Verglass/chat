@@ -4,7 +4,7 @@ import { SocketContext } from "../contexts/socket"
 
 export default function Room() {
     const socket = useContext(SocketContext)
-    
+
     const [room, setRoom] = useState()
     const [isRoomDisplayed, setIsRoomDisplayed] = useState(false)
     const [value, setValue] = useState()
@@ -18,10 +18,9 @@ export default function Room() {
         joinRoom(value)
     }
 
-    const handleClick = () => {
-        const id = uuid()
-        console.log(id)
-        joinRoom(id)
+    const handleClick = (e) => {
+        e.preventDefault()
+        joinRoom(uuid())
     }
 
     const joinRoom = (roomId) => {
@@ -29,7 +28,7 @@ export default function Room() {
     }
 
     useEffect(() => {
-        
+
         socket.on('room-joined', room => {
             setRoom(room)
             setIsRoomDisplayed(true)
@@ -40,7 +39,7 @@ export default function Room() {
     return (
         <div className="room-container">
             {isRoomDisplayed &&
-            <h1>You are in room: {room}</h1>}
+                <h1>You are in room: {room}</h1>}
             <form onSubmit={handleSubmit}>
                 <input type="text" onChange={handleChange} />
                 <button type="submit">Join a Room</button>

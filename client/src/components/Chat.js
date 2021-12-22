@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useCallback } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { SocketContext } from '../contexts/socket';
 
 export default function Chat() {
@@ -6,12 +6,12 @@ export default function Chat() {
 
     const [messageList, setMessageList] = useState(["hej", "hello"])
     const [currentValue, setCurrentValue] = useState("")
-    
+
     useEffect(() => {
         socket.on('message', msg => {
-        setMessageList(messageList => {
-            return [...messageList, msg]
-        })
+            setMessageList(messageList => {
+                return [...messageList, msg]
+            })
         })
     }, [socket])
 
@@ -22,7 +22,7 @@ export default function Chat() {
     const handleSubmit = (e) => {
         e.preventDefault()
         if (currentValue !== "") {
-        socket.emit('message', currentValue)
+            socket.emit('message', currentValue)
         }
     }
 
@@ -30,7 +30,7 @@ export default function Chat() {
         <div className='chat-container'>
             <ul>
                 {messageList.map(msg => {
-                return <li>{msg}</li>
+                    return <li>{msg}</li>
                 })}
             </ul>
             <form onSubmit={handleSubmit}>
